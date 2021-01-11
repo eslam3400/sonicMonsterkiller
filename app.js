@@ -9,45 +9,65 @@ const game = Vue.createApp({
     data() {
         return {
             playerName: null,
-            playerAttDmg: Math.floor(Math.random() * 20),
             playerHealth: 100,
-            monsterAttDmg: Math.floor(Math.random() * 15),
-            monsterHealth: 100
+            monsterHealth: 100,
+            battelStatus: null,
+            battelLog: []
         }
     },
     watch: {
         playerHealth() {
             if (this.playerHealth <= 0) {
                 alert('You lost :(')
-                this.resetGame()
+                this.battelStatus = 'ended'
             }
         },
         monsterHealth() {
             if (this.monsterHealth <= 0) {
                 alert('You won :D')
-                this.resetGame()
+                this.battelStatus = 'ended'
             }
         }
     },
     methods: {
         attackMonster() {
-            this.monsterHealth -= this.playerAttDmg
+            let dmg = Math.floor(Math.random() * 20)
+            this.monsterHealth -= dmg
+            this.addBattelLog(sessionStorage.getItem('sonic__playerName'),'attacked',dmg)
             this.attackplayer()
         },
         attackplayer() {
-            this.playerHealth -= this.monsterAttDmg
+            let dmg = Math.floor(Math.random() * 20)
+            this.addBattelLog('Monster','attacked',dmg)
+            this.playerHealth -= dmg
+        },
+        addBattelLog(who,what,amount){
+            this.battelLog.push({who,what,amount})
         },
         resetGame() {
             this.playerName = null
-            this.playerAttDmg = Math.floor(Math.random() * 20)
             this.playerHealth = 100
-            this.monsterAttDmg = Math.floor(Math.random() * 15)
             this.monsterHealth = 100
-        },
+            this.battelLog = []
+            this.battelStatus = null
+        }
     },
     computed: {
-        getPlayerName() {
-            this.playerName = sessionStorage.getItem('sonic__playerName')
+        playerHealthBar(){
+            return {width: this.playerHealth + "%"}
+        },
+        playerHealthBarColor(){
+            if (this.playerHealth <= 20) return {'bg-danger':true}
+            else if (this.playerHealth <= 50) return {'bg-warning':true}
+            else return {'bg-success':true}
+        },
+        monsterHealthBar(){
+            return {width: this.monsterHealth + "%"}
+        },
+        monsterHealthBarColor(){
+            if (this.monsterHealth <= 20) return {'bg-danger':true}
+            else if (this.monsterHealth <= 50) return {'bg-warning':true}
+            else return {'bg-success':true}
         }
     }
 }).mount('#appContainer__app')
