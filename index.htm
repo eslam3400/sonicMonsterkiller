@@ -46,10 +46,18 @@
                         <!-- <i class="fas fa-gavel"> Attack Damage: <span>{{playerAttDmg}} </span></i> -->
                     </section>
                     <section id="playerSection__status__healthbar" class="mt-3">
+                        <p>Health <i class="fas fa-heartbeat"></i></p>
                         <div class="progress w-75 m-auto">
                             <div class='progress-bar progress-bar-striped progress-bar-animated'
                                 :class="playerHealthBarColor" role='progressbar' :style='playerHealthBar'
                                 aria-valuenow='100' aria-valuemin='0' :aria-valuemax='playerHealth'>{{playerHealth}}
+                            </div>
+                        </div>
+                        <p>Energy <i class="fas fa-bolt"></i></p>
+                        <div class="progress w-75 m-auto">
+                            <div class='progress-bar progress-bar-striped progress-bar-animated bg-primary'
+                                role='progressbar' :style='playerEnergyBar'
+                                aria-valuenow='100' aria-valuemin='0' :aria-valuemax='playerEnergy'>{{playerEnergy}}
                             </div>
                         </div>
                     </section>
@@ -57,8 +65,11 @@
                 <section id="playerSection__img" class="mt-5"><img
                         src="https://lh3.googleusercontent.com/proxy/hhuBF9sjcxXYGSvm6cvmpHxXxRICYGThqPhJb7FJjsUVkEPxjtcpkkD-re2BVRymicSHbWgK65UjZkYDW-ZMJCsnrXHOpnZb"
                         width="500" height="350"></section>
-                <section id="playerSection__actions"><button @click='attackMonster'>Attack <i
-                            class="fas fa-bolt"></i></button></section>
+                <section id="playerSection__actions">
+                    <button @click='attackMonster'>Attack <i class="fas fa-crosshairs"></i></button><br>
+                    <button v-if="playerEnergy >= 100" @click='playerSpecialAtt'>Special Attack <i class="fas fa-bomb"></i></button><br>
+                    <button v-if="playerEnergy >= 100" @click='playerHeal'>Heal <i class="fas fa-briefcase-medical"></i></button>
+                </section>
             </section>
             <section id="app__MonsterSection" class="w-50" v-if="battelStatus===null">
                 <section id="playerSection__status">
@@ -66,10 +77,18 @@
                         <!-- <i class="fas fa-gavel"> Attack Damage: <span>{{monsterAttDmg}} </span></i> -->
                     </section>
                     <section id="playerSection__status__healthbar" class="mt-3">
+                        <p>Health <i class="fas fa-heartbeat"></i></p>
                         <div class="progress w-75 m-auto">
                             <div class='progress-bar progress-bar-striped progress-bar-animated'
                                 :class="monsterHealthBarColor" role='progressbar' :style='monsterHealthBar'
                                 aria-valuenow='100' aria-valuemin='0' :aria-valuemax='monsterHealth'>{{monsterHealth}}
+                            </div>
+                        </div>
+                        <p>Energy <i class="fas fa-bolt"></i></p>
+                        <div class="progress w-75 m-auto">
+                            <div class='progress-bar progress-bar-striped progress-bar-animated bg-primary'
+                                role='progressbar' :style='monsterEnergyBar'
+                                aria-valuenow='100' aria-valuemin='0' :aria-valuemax='monsterEnergy'>{{monsterEnergy}}
                             </div>
                         </div>
                     </section>
