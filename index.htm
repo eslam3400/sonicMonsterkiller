@@ -79,8 +79,9 @@
                         width="500" height="350"></section>
             </section>
             <section class="w-100 mb-5" v-if="battelStatus!==null">
+                <h2 class="mb-3 text-dark">Battel Log</h2>
                 <p v-for="log in battelLog">{{log.who}} - {{log.what}} - {{log.amount}} </p>
-                <button @click="resetGame">Fight Agin!</button>
+                <button class="mt-3" @click="resetGame">Fight Agin!</button>
             </section>
         </section>
     </main>
